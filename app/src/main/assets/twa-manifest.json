@@ -1,0 +1,9 @@
+{
+    "name": "Apno Store",
+    "short_name": "AS ff",
+    "description": "Apno Store is a simple, honest storefront for buying gaming account",
+    "start_url": "https://sunil3086kumar-stack.github.io/Apno-store/",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "scope": "/"
+}
