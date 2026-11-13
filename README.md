@@ -14,7 +14,7 @@ Generated Android Trusted Web Activity (TWA) project for **Apno Store**.
 | Website URL | https://sunil3086kumar-stack.github.io/Apno-store/ |
 | Verified host | sunil3086kumar-stack.github.io |
 | Description | Apno Store is a simple, honest storefront for buying gaming account |
-| Generated at | 2026-11-13 09:59:27 UTC |
+| Generated at | 2026-11-13 10:26:37 UTC |
 
 ## What This Project Contains
 
