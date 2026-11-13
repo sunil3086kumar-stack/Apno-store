@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Apno Store — Free Fire IDs for sale</title>
+<meta name="theme-color" content="#0a0a0c">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Apno Store">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -563,7 +571,7 @@
 <footer id="safety">
   <div class="wrap">
     <button class="footlink" id="sellerLogin">Seller login</button>
-    <div class="mono" style="font-size:.64rem;color:var(--text-faint);margin-top:10px;letter-spacing:.08em">BUILD 2026-11-13 · cloud v7</div>
+    <div class="mono" style="font-size:.64rem;color:var(--text-faint);margin-top:10px;letter-spacing:.08em">BUILD 2026-11-13 · app v8</div>
   </div>
 </footer>
 
@@ -614,6 +622,26 @@
       </button>
     </div>
     <div class="modal__body" id="edBody"></div>
+  </div>
+</div>
+
+<!-- install help -->
+<div class="modal" id="installModal" role="dialog" aria-modal="true" aria-labelledby="inTitle">
+  <div class="modal__panel">
+    <div class="modal__head">
+      <h3 id="inTitle">App install karo</h3>
+      <button class="xbtn" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <p style="font-size:.84rem;color:var(--text-dim);margin-bottom:12px">Is site ko phone me app ki tarah install kar sakte ho — icon home screen pe, browser bar nahi.</p>
+      <p class="accthead">Android (Chrome)</p>
+      <p style="font-size:.82rem;color:var(--text-dim);margin-bottom:14px">Upar right ⋮ menu → <b style="color:var(--text)">"Install app"</b> ya <b style="color:var(--text)">"Add to Home screen"</b>.</p>
+      <p class="accthead">iPhone (Safari)</p>
+      <p style="font-size:.82rem;color:var(--text-dim);margin-bottom:14px">Neeche <b style="color:var(--text)">Share</b> button → <b style="color:var(--text)">"Add to Home Screen"</b> → Add.</p>
+      <button class="copybtn" data-close>Theek hai</button>
+    </div>
   </div>
 </div>
 
@@ -680,6 +708,7 @@
       Seller ID · Instagram
     </a>
     <button id="navHelp">Help assistant</button>
+    <button id="navInstall" hidden>App install karo</button>
   </div>
 </aside>
 
@@ -1056,7 +1085,7 @@ function toast(msg){
 }
 
 function closeAll(){
-  ['contactModal','loginModal','editorModal','signinModal','accountModal','sideNav','aiPanel','cloudModal'].forEach(id => {
+  ['contactModal','loginModal','editorModal','signinModal','accountModal','sideNav','aiPanel','cloudModal','installModal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('open');
   });
@@ -1898,6 +1927,54 @@ document.addEventListener('click', e => {
     if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
   }
 });
+
+/* ============================================================
+   APP INSTALL (PWA) + offline shell
+   ============================================================ */
+let installPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  installPrompt = e;
+  const b = document.getElementById('navInstall');
+  if (b) b.hidden = false;
+});
+
+function openInstallHelp(){
+  $('#installModal').classList.add('open');
+  $('#scrim').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+const navInstallBtn = document.getElementById('navInstall');
+if (navInstallBtn){
+  navInstallBtn.addEventListener('click', async () => {
+    closeAll();
+    if (installPrompt){
+      installPrompt.prompt();
+      try {
+        const res = await installPrompt.userChoice;
+        if (res && res.outcome === 'accepted') toast('App install ho gaya!');
+      } catch(e){}
+      installPrompt = null;
+      navInstallBtn.hidden = true;
+    } else {
+      openInstallHelp();
+    }
+  });
+}
+
+window.addEventListener('appinstalled', () => {
+  const b = document.getElementById('navInstall');
+  if (b) b.hidden = true;
+  toast('App home screen pe aa gaya');
+});
+
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 
 render();
 hydrate();
