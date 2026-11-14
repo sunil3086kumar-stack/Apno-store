@@ -26,7 +26,7 @@ android {
     defaultConfig {
         // 🚨 IMPORTANT: CHANGE THIS TO YOUR APP'S PACKAGE NAME
         // This is the unique identifier for your app on the Google Play Store.
-        applicationId = "com.store.apno"
+        applicationId = "in.apnostore.app"
         
         // Minimum Android version required to run this app (API 24 = Android 7.0)
         minSdk = 24
