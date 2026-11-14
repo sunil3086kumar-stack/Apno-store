@@ -57,7 +57,7 @@ android {
     // 👷 Build types define how the app is built
     buildTypes {
         release {
-            signingConfig = ssigningConfig.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true // Set to true to shrink code, false for easier debugging
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
