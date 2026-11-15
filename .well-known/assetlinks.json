@@ -12,3 +12,15 @@
         }
     }
 ]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "in.apnostore.app",
+      "sha256_cert_fingerprints": [
+        "06:52:B8:AF:98:DC:CC:8C:61:A6:79:DB:83:43:CD:D1:49:F3:51:B8:3D:36:CD:EE:2F:D1:24:31:87:94:7C:BF"
+      ]
+    }
+  }
+]
